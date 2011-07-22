@@ -28,8 +28,8 @@ class Database extends PDO
 			$dsn = "mysql:host=" . self::$_db_info[strtolower($db_name)]['host'] . 
 				   ";dbname=" . self::$_db_info[strtolower($db_name)]['name'];
 				   
-			self::_$db_instances[strtolower($db_name)] = new Database($dsn, self::$_db_info[strtolower($db_name)]['user'], 
-																			self::$_db_info[strtolower($db_name)]['pass']);
+			self::_$db_instances[strtolower($db_name)] = new Database($dsn, self::$_db_info[strtolower($db_name)]['user'],
+			self::$_db_info[strtolower($db_name)]['pass']);
 		}
 	}
 	
