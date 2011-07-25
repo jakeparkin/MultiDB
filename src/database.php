@@ -7,44 +7,30 @@
  *	Multiple Database Handling w/ CRUD
 */
 
-class Database extends PDO
+class Databases
 {
-
-	// Information
-	protected static $_db_info = array();
-
 	// Instances
 	protected static $_db_instances = array();
 	
-	public static function createDB($host, $user, $pass, $db_name) {
+	public static function create($host, $user, $pass, $db_name, $port=3306) {
 	
-		if(empty(self::$_db_instances[strtolower($db_name)]))
+		if(empty(self::$_db_instances[$db_name]))
 		{
-			self::$_db_info[strtolower($db_name)]['host'] = $host;
-			self::$_db_info[strtolower($db_name)]['user'] = $user;
-			self::$_db_info[strtolower($db_name)]['pass'] = $pass;
-			self::$_db_info[strtolower($db_name)]['name'] = $db_name;
-			
-			$dsn = "mysql:host=" . self::$_db_info[strtolower($db_name)]['host'] . 
-				   ";dbname=" . self::$_db_info[strtolower($db_name)]['name'];
-				   
-			self::_$db_instances[strtolower($db_name)] = new Database($dsn, self::$_db_info[strtolower($db_name)]['user'],
-			self::$_db_info[strtolower($db_name)]['pass']);
+			$dsn = "mysql:host={$host};port={$port};dbname={$db_name}";
+			self::$_db_instances[$db_name] = new PDO($dsn, $user, $pass);
 		}
 	}
 	
-	public static function getDB($db_name) {
+	public static function get($db_name) {
 		
-		if(!empty(self::$_db_instances[strtolower($db_name)]))
-			return self::$_db_instances[strtolower($db_name)];
+		if(!empty(self::$_db_instances[$db_name]))
+			return self::$_db_instances[$db_name];
 	}
 	
 	
-	public static function deleteDB($db_name) {
-	
-		if(!empty(self::$_db_instances[strtolower($db_name)])) {
-			unset(self::$_db_instances[strtolower($db_name)]);
-		}
+	public static function delete($db_name) {
+		if(!empty(self::$_db_instances[$db_name]))
+			unset(self::$_db_instances[$db_name]);
 	}
 
 }
