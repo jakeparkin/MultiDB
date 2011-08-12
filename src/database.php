@@ -32,5 +32,4 @@ class Databases
 		if(!empty(self::$_db_instances[$db_name]))
 			unset(self::$_db_instances[$db_name]);
 	}
-
 }
